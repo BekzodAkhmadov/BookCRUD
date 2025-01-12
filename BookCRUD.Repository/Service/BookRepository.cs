@@ -10,7 +10,7 @@ namespace BookCRUD.Repository.Services
         private List<Book> _book;
         public BookRepository()
         {
-            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Music.json");
+            _filePath = Path.Combine(Directory.GetCurrentDirectory(), "Data", "Book.json");
             _directoryPath = Path.Combine(Directory.GetCurrentDirectory(), "Data");
 
             if (!Directory.Exists(_directoryPath))
@@ -24,11 +24,11 @@ namespace BookCRUD.Repository.Services
             _book = GetAllbooks();
 
         }
-        public Guid AddBook(Book music)
+        public Guid AddBook(Book book)
         {
-            _book.Add(music);
+            _book.Add(book);
             SaveDate();
-            return music.Id;
+            return book.Id;
         }
 
         public void DeleteBook(Guid id)
@@ -42,8 +42,9 @@ namespace BookCRUD.Repository.Services
         public List<Book> GetAllbooks()
         {
             var bookJson = File.ReadAllText(_filePath);
-            var bookList = JsonSerializer.Deserialize<List<Book>>(bookJson);
+            var bookList = JsonSerializer.Deserialize<List<Book>>(bookJson) ?? new List<Book>();
             return bookList;
+
         }
 
         public Book GetBookById(Guid id)

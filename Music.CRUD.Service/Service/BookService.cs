@@ -47,7 +47,7 @@ namespace Music.CRUD.Service.Service
         public List<BookDto> GetBooksPublishedAfterYear(int year)
         {
             return GetAllbooks()
-                .Where(book => book.PublishedDate.Year > year)
+                .Where(book => book.PublishedDate > year)
                 .ToList();
         }
 
@@ -75,8 +75,9 @@ namespace Music.CRUD.Service.Service
 
         public List<BookDto> GetRecentBooks(int years)
         {
+            var currentDate = DateTime.Now.Year;
             return GetAllbooks()
-                .Where(book => book.PublishedDate.Year >= DateTime.Now.Year - years)
+                .Where(book => book.PublishedDate > currentDate - years)
                 .ToList();
         }
 
